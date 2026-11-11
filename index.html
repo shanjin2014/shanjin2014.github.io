@@ -120,7 +120,7 @@
   <div class="in">
     <a class="nm" href="#">Shan Jin</a>
     <div class="ls">
-      <a href="#about">About</a><a href="#news">News</a><a href="#publications">Publications</a><a href="#experience">Experience</a>
+      <a href="#about">About</a><a href="#news">News</a><a href="#publications">Publications</a><a href="#experience">Experience</a><a href="#education">Education</a>
     </div>
   </div>
 </nav>
@@ -256,7 +256,7 @@
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   const links=[...document.querySelectorAll('nav .ls a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
-  addEventListener('scroll',()=>{let i=secs.findLastIndex(s=>s.getBoundingClientRect().top<140);links.forEach((a,j)=>a.classList.toggle('on',j===i))},{passive:true});
+  addEventListener('scroll',()=>{let i=secs.findLastIndex(s=>s.getBoundingClientRect().top<140);if(innerHeight+scrollY>=document.body.scrollHeight-4)i=secs.length-1;links.forEach((a,j)=>a.classList.toggle('on',j===i))},{passive:true});
 })();
 </script>
 </body>
