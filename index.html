@@ -106,6 +106,17 @@
   .two{display:grid;grid-template-columns:1fr;gap:0}
   @media (max-width:560px){.xp li{grid-template-columns:1fr;gap:4px}}
 
+  .fab{display:none}
+  @media (max-width:720px){
+    .fab{display:block;position:fixed;right:18px;bottom:22px;z-index:50}
+    .fab-btn{width:52px;height:52px;border-radius:50%;border:0;background:var(--ink);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer}
+    .fab-btn svg{width:22px;height:22px}
+    .fab-menu{position:absolute;right:0;bottom:64px;min-width:190px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.16);padding:8px;opacity:0;transform:translateY(8px) scale(.97);transform-origin:bottom right;pointer-events:none;transition:.2s ease}
+    .fab.open .fab-menu{opacity:1;transform:none;pointer-events:auto}
+    .fab-menu a{display:block;padding:11px 14px;border-radius:9px;font-size:15px;color:var(--body)}
+    .fab-menu a.on{background:var(--soft);color:var(--ink);font-weight:600}
+    .fab-menu a.top{border-top:1px solid var(--line);margin-top:4px;border-radius:0 0 9px 9px;color:var(--mute);font-size:14px}
+  }
   footer{border-top:1px solid var(--line);margin-top:20px;padding:30px 0 50px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--faint)}
   footer em{font-family:var(--serif);font-size:15.5px;color:var(--mute)}
 
@@ -145,7 +156,8 @@
       <p class="intro rv">I build <em>agentic AI systems</em> that are efficient, reliable, and secure and private enough for real-world deployment.</p>
       <div class="prose rv">
         <p>I am a Staff Research Scientist on Visa Research's GenAI Trustworthy and Efficiency (GATE) team. My research spans system design, security and privacy, and large-scale GenAI systems.</p>
-        <p>Previously, I worked on cyber-physical systems and security, side-channel cryptanalysis, and wireless communications and networking. I received my Ph.D. in Computer Engineering from Texas A&amp;M University, College Station (TAMU) in 2019, and my M.S. and B.S. from the University of Electronic Science and Technology of China (UESTC).</p>
+        <p>Previously, I worked on cyber-physical systems and security, side-channel cryptanalysis, and wireless communications and networking.</p>
+        <p>I received my Ph.D. in Computer Engineering from Texas A&amp;M University, College Station (TAMU) in 2019, and my M.Eng. and B.Eng. from the University of Electronic Science and Technology of China (UESTC).</p>
       </div>
       <div class="interests rv">
         <span>Agentic AI Systems</span><span>Trustworthy GenAI</span><span>Privacy-Preserving ML</span><span>AI Security</span><span>Applied Cryptography</span><span>Side-Channel Analysis</span>
@@ -226,11 +238,11 @@
     <section class="sec" id="experience">
       <div class="sh rv"><h2>Experience</h2></div>
       <ul class="xp">
-        <li class="rv"><span class="y">2022 — Now</span><div><div class="t">Staff Research Scientist, Visa Research</div><div class="o">GenAI Trustworthy &amp; Efficiency (GATE) Team</div><div class="ds">Designing and developing efficient, secure, and reliable agentic and AI systems.</div></div></li>
-        <li class="rv"><span class="y">2020 — 2022</span><div><div class="t">Visa Research</div><div class="o">System Security &amp; Applied Cryptography Team</div><div class="ds">Side-channel attack mitigation and side-channel cryptanalysis.</div></div></li>
+        <li class="rv"><span class="y">2022 — Now</span><div><div class="t">Staff Research Scientist</div><div class="o">GenAI Trustworthy &amp; Efficiency (GATE) Team, Visa Research</div><div class="ds">Designing and developing efficient, secure, and reliable agentic and AI systems.</div></div></li>
+        <li class="rv"><span class="y">2020 — 2022</span><div><div class="t">Staff Research Scientist</div><div class="o">System Security &amp; Applied Cryptography Team, Visa Research</div><div class="ds">Designed and developed schemes for side-channel attack mitigation and side-channel cryptanalysis.</div></div></li>
         <li class="rv"><span class="y">2016 — 2019</span><div><div class="t">Graduate Research Assistant</div><div class="o">Dept. of Computer Science &amp; Engineering, Texas A&amp;M University</div></div></li>
         <li class="rv"><span class="y">2015 — 2016</span><div><div class="t">Research Assistant</div><div class="o">High Performance Research Computing Center, Texas A&amp;M University</div></div></li>
-        <li class="rv"><span class="y">2010 — 2014</span><div><div class="t">National Key Laboratory of Wireless Communications</div><div class="o">University of Electronic Science and Technology of China</div></div></li>
+        <li class="rv"><span class="y">2010 — 2014</span><div><div class="t">Research Assistant</div><div class="o">National Key Laboratory of Wireless Communications, University of Electronic Science and Technology of China</div></div></li>
       </ul>
     </section>
 
@@ -250,12 +262,23 @@
   </main>
 </div>
 
+<div class="fab" id="fab">
+  <div class="fab-menu" role="navigation" aria-label="Sections">
+    <a href="#about">About Me</a><a href="#news">News</a><a href="#publications">Publications</a><a href="#experience">Experience</a><a href="#education">Education</a><a class="top" href="#">↑ Back to top</a>
+  </div>
+  <button class="fab-btn" aria-label="Open section menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</div>
+
 <script>
 (() => {
+  const fab=document.getElementById('fab'),fb=fab.querySelector('.fab-btn');
+  fb.addEventListener('click',e=>{e.stopPropagation();const o=fab.classList.toggle('open');fb.setAttribute('aria-expanded',o)});
+  fab.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>fab.classList.remove('open')));
+  document.addEventListener('click',e=>{if(!fab.contains(e.target))fab.classList.remove('open')});
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   const links=[...document.querySelectorAll('nav .ls a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
-  addEventListener('scroll',()=>{let i=secs.findLastIndex(s=>s.getBoundingClientRect().top<140);if(innerHeight+scrollY>=document.body.scrollHeight-4)i=secs.length-1;links.forEach((a,j)=>a.classList.toggle('on',j===i))},{passive:true});
+  addEventListener('scroll',()=>{let i=secs.findLastIndex(s=>s.getBoundingClientRect().top<140);if(innerHeight+scrollY>=document.body.scrollHeight-4)i=secs.length-1;links.forEach((a,j)=>a.classList.toggle('on',j===i));document.querySelectorAll('.fab-menu a:not(.top)').forEach((a,j)=>a.classList.toggle('on',j===i))},{passive:true});
 })();
 </script>
 </body>
